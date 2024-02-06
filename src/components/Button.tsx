@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useCallback, useState } from 'react';
 import styled from 'styled-components';
 
 const StyledButton = styled.button<{ background: string }>`
@@ -10,10 +10,14 @@ const StyledButton = styled.button<{ background: string }>`
 	padding: 1rem;
 	font-weight: 700;
 	cursor: pointer;
-	transition: .15s;
+	transition: 0.15s;
 
 	&:hover {
-		background: color-mix(in srgb, ${(props) => props.background} 75%, #808080 25%);
+		background: color-mix(
+			in srgb,
+			${(props) => props.background} 75%,
+			#808080 25%
+		);
 	}
 
 	background: ${(props) => props.background};
@@ -26,10 +30,10 @@ interface Props {
 const Button: React.FC<Props> = ({ getRandomColor }) => {
 	const [color, setColor] = useState<string>('rgb(255, 255, 255)');
 
-	const changeColor = () => {
+	const changeColor = useCallback(() => {
 		const newColor = getRandomColor();
 		setColor(newColor);
-	};
+	}, []);
 
 	return (
 		<StyledButton
